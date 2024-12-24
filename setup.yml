@@ -1,0 +1,33 @@
+---
+
+- name: Setup common prerequisites
+  hosts: localhost
+  gather_facts: false
+
+  vars_files:
+    - common/setup.yml
+
+  tasks:
+    - name: Create a reusable deployment ID
+      ansible.builtin.set_fact:
+        _deployment_id: '{{ lookup("ansible.builtin.password", "{{ playbook_dir }}/.deployment_id", chars=["ascii_lowercase", "digits"], length=5) }}'
+
+    - name: Create common resources
+      ansible.builtin.include_role:
+        name: infra.controller_configuration.dispatch
+      vars:
+        controller_dependence_check: false
+
+- name: Setup Ansible Automation Platform
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Include configuration for Linux automation
+      ansible.builtin.include_vars: "aap-linux/setup.yml"
+
+    - name: Demo Components
+      ansible.builtin.include_role:
+        name: infra.controller_configuration.dispatch
+      vars:
+        controller_dependency_check: false
