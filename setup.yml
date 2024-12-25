@@ -24,7 +24,7 @@
 
   tasks:
     - name: Include configuration for Linux automation
-      ansible.builtin.include_vars: "aap-linux/setup.yml"
+      ansible.builtin.include_vars: "linux/setup.yml"
 
     - name: Demo Components
       ansible.builtin.include_role:
