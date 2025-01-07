@@ -1,0 +1,5 @@
+---
+- name: Example playbook
+  hosts: localhost
+  roles:
+    - role: dperrone.aap_setup.run
